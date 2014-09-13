@@ -1,0 +1,149 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simple REST</title>
+  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+  <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/static/js/underscore.min.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container" style="width: 720px;">
+      <div class="navbar-header"><a class="navbar-brand" href="#">Simple REST</a></div>
+    </div>
+  </nav>
+  <div class="container" style="width: 720px;">
+    <legend>Test Users</legend>
+    <pre>
+  Id: 1
+  Username: user1
+  Password: pass
+  Client Id: client1
+
+  Id: 1
+  Username: user2
+  Password: pass
+  Client Id: cleint2
+    </pre>
+    <br>
+    <legend>Login</legend>
+    <form class="form-inline" role="form" id="login-form">
+      <div class="form-group">
+        <input type="text" name="username" class="form-control" placeholder="Username">
+      </div>
+      <div class="form-group">
+        <input type="password" name="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+      </div>
+      <div class="form-group">
+        <input type="text" id="client-id" class="form-control" placeholder="Client Id">
+      </div>
+      <input type="hidden" name="grant_type" value="password">
+      <button type="submit" class="btn btn-success" style="width:180px">Sign In</button>
+    </form>
+    <div id="token" class="well"></div>
+    <br>
+    <legend>Log Out</legend>
+    <button class="btn btn-danger" id="btn-logout">Log Out</button>
+    <br><br>
+    <div id="revoke-access" class="well"></div>
+    <br><br><br>
+    <legend>List All News | <span style="text-decoration: underline;">/api/news/</span></legend>
+    <button class="btn btn-primary" id="btn-all-news">Query</button>
+    <br><br>
+    <pre id="news"></pre>
+    <br>
+    <legend>News by ID | <span style="text-decoration: underline;">/api/news/:id/</span></legend>
+    <div class="well">
+      <form class="form-inline" role="form" style="width: 400px;" id="news-item-form">
+        <div class="form-group">
+          <input type="text" class="form-control" id="news-item-form-id" placeholder="ID">
+          <button type="submit" class="btn btn-primary">Query</button>
+        </div>
+      </form>
+      <pre id="news-item"></pre>
+    </div>
+    <br>
+    <legend>News by Author ID | <span style="text-decoration: underline;">/api/news/?author__id=:id</span></legend>
+    <div class="well">
+      <form class="form-inline" role="form" style="width: 400px;" id="news-author-item-form">
+        <div class="form-group">
+          <input type="text" class="form-control" id="news-author-item-form-id" placeholder="Author ID">
+          <button type="submit" class="btn btn-primary">Query</button>
+        </div>
+      </form>
+      <pre id="author-news"></pre>
+    </div>
+    <br>
+  </div>
+  <script type="text/javascript">
+        var token;
+
+        // Login
+        $('#login-form').submit(function(form){
+          $('#token').html('');
+          var data = $(form.target).serialize();
+          var clientId = $('#client-id').val();
+          $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8000/o/token/',
+            headers: {"Authorization": "Basic " + btoa(clientId + ":")},
+            data: data
+          }).done(function(result){
+            token = result['access_token'];
+            $('#token').html('<b>Access token:</b> ' + token);
+          });
+          return false;
+        });
+
+        // Logout
+        $('#btn-logout').click(function(){
+          $('#revoke-access').html('');
+          $.ajax({
+            url: "http://localhost:8000/revoke-access/",
+            headers: {"Authorization": "Bearer " + token}
+          }).done(function(response){
+            $('#revoke-access').html('<b>Revoked acces for token:</b> ' + token);
+          });
+        });
+
+        // Get all news
+        $('#btn-all-news').click(function(){
+          $('#news').html('');
+          $.ajax({
+            url: "http://localhost:8000/api/news/",
+            headers: {"Authorization": "Bearer " + token}
+          }).done(function(response){
+            $('#news').text(JSON.stringify(response, undefined, 2));
+          });
+        });
+
+        // Get news item by id
+        $('#news-item-form').submit(function() {
+          $('#news-item').html('');
+          var id = $("#news-item-form-id").val();
+          $.ajax({
+            url: "http://localhost:8000/api/news/" + id + "/",
+            headers: {"Authorization": "Bearer " + token}
+          }).done(function(newsItem){
+            $('#news-item').text(JSON.stringify(newsItem, undefined, 2));
+          });
+          return false;
+        });
+
+        // Get news item by author id
+        $('#news-author-item-form').submit(function() {
+          $('#author-news').html('');
+          var id = $("#news-author-item-form-id").val();
+          $.ajax({
+            url: "http://localhost:8000/api/news/?author__id=" + id,
+            headers: {"Authorization": "Bearer " + token}
+          }).done(function(response){
+            $('#author-news').text(JSON.stringify(response, undefined, 2));
+          });
+          return false;
+        });
+  </script>
+</body>
+</html>

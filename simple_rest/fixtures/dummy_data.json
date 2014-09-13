@@ -1,0 +1,114 @@
+[
+{
+  "pk": 1,
+  "model": "auth.user",
+  "fields": {
+    "username": "user1",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": true,
+    "is_staff": true,
+    "last_login": "2014-09-13T15:22:44Z",
+    "groups": [],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$DS5tVkYTlx7P$/+om+YgOsHDA9HI/DfVh6tmzGcnWdCc3zsKkWNjkzEU=",
+    "email": "user1@mail.com",
+    "date_joined": "2014-09-12T16:54:16Z"
+  }
+},
+{
+  "pk": 2,
+  "model": "auth.user",
+  "fields": {
+    "username": "user2",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": true,
+    "is_staff": true,
+    "last_login": "2014-09-12T18:37:38.285Z",
+    "groups": [],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$DDmolDDkwGBL$qJiFy9vp1IflopDYb819iO+74RkSCoGOMNtgRPtxiP8=",
+    "email": "user2@gmail.com",
+    "date_joined": "2014-09-12T18:36:33.757Z"
+  }
+},
+{
+  "pk": 1,
+  "model": "oauth2_provider.application",
+  "fields": {
+    "redirect_uris": "",
+    "name": "User 1 App",
+    "client_type": "confidential",
+    "user": 1,
+    "client_id": "client1",
+    "client_secret": "",
+    "authorization_grant_type": "password"
+  }
+},
+{
+  "pk": 2,
+  "model": "oauth2_provider.application",
+  "fields": {
+    "redirect_uris": "",
+    "name": "User 2 App",
+    "client_type": "confidential",
+    "user": 2,
+    "client_id": "client2",
+    "client_secret": "",
+    "authorization_grant_type": "password"
+  }
+},
+{
+  "pk": 1,
+  "model": "core.newsitem",
+  "fields": {
+    "published": "2014-09-12T16:57:02.350Z",
+    "content": "<b>Donec quam felis</b>, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.",
+    "author": 1,
+    "title": "Hello World 1"
+  }
+},
+{
+  "pk": 2,
+  "model": "core.newsitem",
+  "fields": {
+    "published": "2014-09-13T15:22:57.541Z",
+    "content": "<b>Lorem ipsum</b> dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+    "author": 2,
+    "title": "Hello World 2"
+  }
+},
+{
+  "pk": 3,
+  "model": "core.newsitem",
+  "fields": {
+    "published": "2014-09-13T15:29:35.781Z",
+    "content": "In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.",
+    "author": 1,
+    "title": "Hello World 3"
+  }
+},
+{
+  "pk": 4,
+  "model": "core.newsitem",
+  "fields": {
+    "published": "2014-09-13T15:30:01.748Z",
+    "content": "Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.",
+    "author": 2,
+    "title": "Hello World 4"
+  }
+},
+{
+  "pk": 5,
+  "model": "core.newsitem",
+  "fields": {
+    "published": "2014-09-13T15:30:25.104Z",
+    "content": "<b>Aenean imperdiet</b>. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.",
+    "author": 2,
+    "title": "Hello World 5"
+  }
+}
+]
